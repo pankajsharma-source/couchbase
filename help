@@ -1,0 +1,117 @@
+
+Installation: Did a local intllation on Mac. Needed 7.0 beta version to be able to use Scope and Collections
+
+Go to following folder in Mac:
+/Applications/Couchbase\ Server.app/Contents/Resources/couchbase-core/bin
+
+//Create Bucket
+./couchbase-cli bucket-create \
+--cluster localhost:8091 \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--bucket-type couchbase \
+--bucket-ramsize 8940
+
+
+//Create Scope - user
+./couchbase-cli collection-manage \
+--cluster http://localhost:8091 \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-scope user
+
+
+//Create Scope - account
+./couchbase-cli collection-manage \
+--cluster http://localhost:8091 \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-scope account
+
+//Create Scope - imported
+./couchbase-cli collection-manage \
+--cluster http://localhost:8091 \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-scope imported
+
+
+//Create Collections under "user" scope
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection user.profile
+
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection user.goals
+
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection user.recipe
+
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection user.ingredient
+
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection user.meal
+
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection user.phone-id-mapping
+
+//Create Collections under "account" scope
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection account.subscription
+
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection account.payment
+
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection account.phone-id-mapping
+
+//Create Collections under "imported" scope
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection imported.food
+
+./couchbase-cli collection-manage -c localhost \
+--username Administrator \
+--password password \
+--bucket aiFitnessBucket \
+--create-collection imported.ingredient
+
+
+//Here is an example of importing CSV file to couchbase.
+// In this example, the csv file was sopied in the folder above bin, i.e.
+// "Applications/Couchbase\ Server.app/Contents/Resources/couchbase-core"
+./cbimport cvs -c couchbase://127.0.0.1 -u Administrator -p password \
+ -b default -d file://../xyz.csv -g key::%Name% -t 4
